@@ -3,7 +3,9 @@ import data from "./sankey-data"
 import { Group } from "@visx/group"
 import { Text } from "@visx/text"
 import { sankeyLinkHorizontal } from "d3-sankey"
-import { linkHorizontal } from "d3-shape"
+import { useContext } from "react"
+import { DarkModeContext } from "./DarkModeContext"
+import tailwindConfig, { tailwindColors } from "../lib/tailwind-config"
 
 export interface SankeyChartProps {
     width: number
@@ -22,6 +24,7 @@ const SankeyChart = ({
         bottom: 0
     }
 }: SankeyChartProps) => {
+    const darkMode = useContext(DarkModeContext)
 
     const path = sankeyLinkHorizontal()
         .source((d) => {
@@ -34,7 +37,6 @@ const SankeyChart = ({
                 return [d.target.x0 ?? 0, d.y1 ?? 0]
             return [0,0]
         })
-
 
     return (
         <svg
@@ -64,11 +66,14 @@ const SankeyChart = ({
                                         id={`rect-${i}`}
                                         width={nodeWidth}
                                         height={nodeHeight}
+                                        fill={darkMode ? tailwindColors.neutral['100'] : tailwindColors.neutral['800']}
+                                        r={4}
                                     />
                                     <Text
                                         x={(node.x1 ?? 0) > (width - 50) ? '-100' : '18'}
                                         y={nodeHeight / 2}
                                         verticalAnchor="middle"
+                                        fill={darkMode ? 'white' : 'black'}
                                     >
                                         {node.name}
                                     </Text>
@@ -83,7 +88,7 @@ const SankeyChart = ({
                                 <path 
                                     key={`link-${i}`}
                                     d={path(link) ?? undefined}
-                                    stroke={'red'}
+                                    stroke={darkMode ? tailwindColors.neutral['100'] : tailwindColors.neutral['900']}
                                     strokeWidth={Math.max(1, link.width ?? 0)}
                                     fill="none"
                                     opacity={0.15}

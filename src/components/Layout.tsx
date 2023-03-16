@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import DarkModeButton from "./DarkModeButton";
+import { DarkModeContext } from "./DarkModeContext";
 import Footer from "./Footer";
 import NavBar from "./Navbar";
 
@@ -45,17 +46,19 @@ export default function Layout({ children }: LayoutProps) {
                 ></div>
             </motion.div>
             <div className="max-w-xl mx-auto" style={{ marginTop: navBarHeight + 10 }}>
-                {Array.isArray(children) && children.map((child, index) => 
-                    <motion.div
-                        key={`child-${index}`}
-                        className="my-10"
-                        initial={{ opacity: 0, scale: 1.02 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
-                    >
-                        {child}
-                    </motion.div>
-                )}
+                <DarkModeContext.Provider value={darkMode}>
+                    {Array.isArray(children) && children.map((child, index) => 
+                        <motion.div
+                            key={`child-${index}`}
+                            className="my-10"
+                            initial={{ opacity: 0, scale: 1.02 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
+                        >
+                            {child}
+                        </motion.div>
+                    )}
+                </DarkModeContext.Provider>
             </div> 
             <motion.div
                 initial={{ opacity : 0}}
