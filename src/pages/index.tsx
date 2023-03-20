@@ -9,10 +9,17 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import getSankeyData from '@/sanity-queries/getSankeyData'
 import { SankeyData } from '@/components/Sankey'
 import testData from '../components/sankey-data'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
+
+  const [data, setData] = useState<SankeyData | undefined>(undefined)
+
+  useEffect(() => {
+    setData(props.data)
+  }, [props.data])
 
   return (
     <>
@@ -26,7 +33,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
         <Layout>
           <Hero />
           <Bio />
-          <SankeyChart data={props.data} width={600} height={800} />
+          <SankeyChart data={data} width={600} height={800} />
           <Skills />
         </Layout>
       </main>

@@ -7,7 +7,7 @@ import { DarkModeContext } from "./DarkModeContext"
 import { tailwindColors } from "../lib/tailwind-config"
 
 export interface SankeyChartProps {
-  data: SankeyData
+  data: SankeyData | undefined
   width: number
   height: number
   margin?: { top: number, left: number, right: number, bottom: number }
@@ -43,7 +43,8 @@ const SankeyChart = ({
       width={width + margin.left + margin.right}
       height={height + margin.top + margin.bottom}
     >
-      <Sankey
+
+      {data && <Sankey
         top={margin.top}
         left={margin.left}
         data={data}
@@ -100,7 +101,7 @@ const SankeyChart = ({
 
           </Group>
         )}
-      </Sankey>
+      </Sankey>}
     </svg>
   )
 }
