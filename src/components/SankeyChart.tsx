@@ -1,5 +1,4 @@
-import Sankey, { SankeyLink, SankeyNode } from "./Sankey"
-import data from "./sankey-data"
+import Sankey, { SankeyData, SankeyLink, SankeyNode } from "./Sankey"
 import { Group } from "@visx/group"
 import { Text } from "@visx/text"
 import { sankeyLinkHorizontal } from "d3-sankey"
@@ -8,13 +7,14 @@ import { DarkModeContext } from "./DarkModeContext"
 import { tailwindColors } from "../lib/tailwind-config"
 
 export interface SankeyChartProps {
+  data: SankeyData
   width: number
   height: number
   margin?: { top: number, left: number, right: number, bottom: number }
 }
 
-
 const SankeyChart = ({
+  data,
   width,
   height,
   margin = {
@@ -54,6 +54,7 @@ const SankeyChart = ({
           [1, 1],
           [width - 1, height - 6]
         ]}
+        nodeId={(d) => d.id}
       >
         {(data) => (
           <Group>

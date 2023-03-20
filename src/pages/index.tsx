@@ -5,10 +5,15 @@ import Hero from '@/components/Hero'
 import Bio from '@/components/Bio'
 import Skills from '@/components/Skills'
 import SankeyChart from '@/components/SankeyChart'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import getSankeyData from '@/sanity-queries/getSankeyData'
+import { SankeyData } from '@/components/Sankey'
+import testData from '../components/sankey-data'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
+
   return (
     <>
       <Head>
@@ -21,10 +26,18 @@ export default function Home() {
         <Layout>
           <Hero />
           <Bio />
-          <SankeyChart width={600} height={800} />
+          <SankeyChart data={props.data} width={600} height={800} />
           <Skills />
         </Layout>
       </main>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps<{ data: SankeyData }> = async (context) => {
+  const sankeyData: SankeyData = await getSankeyData()
+
+  return {
+    props: { data: sankeyData }
+  }
 }
