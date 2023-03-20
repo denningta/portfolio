@@ -24,6 +24,9 @@ const SankeyChart = ({
     bottom: 0
   }
 }: SankeyChartProps) => {
+
+  console.log(data)
+
   const darkMode = useContext(DarkModeContext)
 
   const path = sankeyLinkHorizontal()

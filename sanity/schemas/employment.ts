@@ -30,6 +30,11 @@ export default defineType({
       type: 'date'
     }),
     defineField({
+      name: 'years',
+      title: 'Years',
+      type: 'number'
+    }),
+    defineField({
       name: 'references',
       title: 'Projects',
       type: 'array',

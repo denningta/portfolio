@@ -8,21 +8,27 @@ const getSankeyData = async () => {
           "name": title,
           "id": slug.current
         },
-        "linksData": *[_type in ["employment", "project"]] {
-          "links": references[] | {
+        "linkData": *[_type == "employment"] {
+          "links": references[] {
             "source": ^.slug.current,
-            "value": percent,
-            ^._type == "employment" => {
-              "target": project->slug.current,
-            },
-            ^._type == "project" => {
-              "target": skill->slug.current
-            },
+            "target": project->slug.current,
+            "value": ^.years * (percent / 100),
+          },
+          "subLinks": references[] {
+            "source": project->slug.current,
+            "skills": project->references[],
+            "value": ^.years * (percent / 100)
+          } | {
+            "links": skills[] {
+              "source": ^.source,
+              "target": skill->slug.current,
+              "value": ^.value * (percent / 100)
+            }
           }
-        }
+        },
       } | {
-        "links": linksData[].links[],
-        "nodes": nodes
+        "nodes": nodes,
+        "links": linkData[].links[] + linkData[].subLinks[].links[],
       }
     `)
 
