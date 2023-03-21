@@ -1,10 +1,11 @@
-import Sankey, { SankeyData, SankeyLink, SankeyNode } from "./Sankey"
+import Sankey, { SankeyData } from "./Sankey"
 import { Group } from "@visx/group"
 import { Text } from "@visx/text"
 import { sankeyLinkHorizontal } from "d3-sankey"
-import { useContext } from "react"
-import { DarkModeContext } from "./DarkModeContext"
-import { tailwindColors } from "../lib/tailwind-config"
+import { useContext, useState } from "react"
+import { DarkModeContext } from "../DarkModeContext"
+import { tailwindColors } from "../../lib/tailwind-config"
+import SankeyLinkComponent from "./SankeyLink"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
@@ -24,9 +25,6 @@ const SankeyChart = ({
     bottom: 0
   }
 }: SankeyChartProps) => {
-
-  console.log(data)
-
   const darkMode = useContext(DarkModeContext)
 
   const path = sankeyLinkHorizontal()
@@ -59,6 +57,7 @@ const SankeyChart = ({
           [width - 1, height - 6]
         ]}
         nodeId={(d) => d.id}
+        nodeSort={(a, b) => undefined}
       >
         {(data) => (
           <Group>
@@ -75,10 +74,12 @@ const SankeyChart = ({
                     r={4}
                   />
                   <Text
-                    x={(node.x1 ?? 0) > (width - 50) ? '-100' : '18'}
+                    x={(node.x0 ?? 0) > 1 ? '-5' : '18'}
                     y={nodeHeight / 2}
                     verticalAnchor="middle"
+                    textAnchor={(node.x0 ?? 0) > 1 ? 'end' : 'start'}
                     fill={darkMode ? 'white' : 'black'}
+                    width={(node.x0 ?? 0) > (width - 50) ? 300 : 130}
                   >
                     {node.name}
                   </Text>
@@ -87,19 +88,12 @@ const SankeyChart = ({
             })}
 
             <Group>
-              {data.links.map((link, i) => {
-
-                return (
-                  <path
-                    key={`link-${i}`}
-                    d={path(link) ?? undefined}
-                    stroke={darkMode ? tailwindColors.neutral['100'] : tailwindColors.neutral['900']}
-                    strokeWidth={Math.max(1, link.width ?? 0)}
-                    fill="none"
-                    opacity={0.15}
-                  />
-                )
-              })}
+              {data.links.map((link, i) =>
+                <SankeyLinkComponent
+                  key={`link-${i}`}
+                  link={link}
+                />
+              )}
             </Group>
 
           </Group>

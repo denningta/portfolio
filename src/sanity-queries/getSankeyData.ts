@@ -4,17 +4,17 @@ const getSankeyData = async () => {
   try {
     const response = await client.fetch(`
       {
-        "nodes": *[_type in ["employment", "project", "skill"]] {
-          "name": title,
-          "id": slug.current
-        },
-        "linkData": *[_type == "employment"] {
+        "nodes": 
+          *[_type == "sankey"].employment[]-> 
+          + *[_type == "sankey"].projects[]-> 
+          + *[_type == "sankey"].skills[]->,
+        "linkdata": *[_type == "sankey"].employment[]-> {
           "links": references[] {
             "source": ^.slug.current,
             "target": project->slug.current,
             "value": ^.years * (percent / 100),
           },
-          "subLinks": references[] {
+          "sublinks": references[] {
             "source": project->slug.current,
             "skills": project->references[],
             "value": ^.years * (percent / 100)
@@ -27,8 +27,11 @@ const getSankeyData = async () => {
           }
         },
       } | {
-        "nodes": nodes,
-        "links": linkData[].links[] + linkData[].subLinks[].links[],
+        "nodes": nodes[] | {
+          "name": title,
+          "id": slug.current
+        },
+        "links": linkdata[].links[] + linkdata[].sublinks[].links[],
       }
     `)
 

@@ -7,15 +7,18 @@ import project from './project'
 import skill from './skill'
 import projectReference from './project-reference'
 import skillReference from './skill-reference'
+import sankey from './sankey'
 
 export const schemaTypes = [
-    post, 
-    author, 
-    category, 
-    blockContent, 
-    employment, 
-    project, 
-    skill,
-    projectReference,
-    skillReference,
+  post,
+  author,
+  category,
+  blockContent,
+  employment,
+  project,
+  skill,
+  projectReference,
+  skillReference,
+  sankey
 ]
+

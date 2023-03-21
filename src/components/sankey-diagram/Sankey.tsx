@@ -2,12 +2,11 @@ import { sankey as d3Sankey, SankeyLayout, SankeyGraph } from "d3-sankey"
 import { HierarchyDefaultNode as DefaultNode } from "@visx/hierarchy"
 import { Group } from "@visx/group"
 
-export interface SankeyNode { name: string, id: string }
-export interface SankeyLink { source: number | string, target: number | string, value: number }
+export interface SankeyNodeCustom { name: string, id: string }
+export interface SankeyLinkCustom { source: number | string, target: number | string, value: number }
 
-export type SankeyData = SankeyGraph<SankeyNode, SankeyLink>
-
-type D3SankeyProps = SankeyLayout<SankeyData, SankeyNode, SankeyLink>
+export type SankeyData = SankeyGraph<SankeyNodeCustom, SankeyLinkCustom>
+type D3SankeyProps = SankeyLayout<SankeyData, SankeyNodeCustom, SankeyLinkCustom>
 
 export interface SankeyProps {
   data: SankeyData
@@ -20,6 +19,7 @@ export interface SankeyProps {
   nodeAlign?: Parameters<D3SankeyProps['nodeAlign']>[0]
   nodeWidth?: Parameters<D3SankeyProps['nodeWidth']>[0]
   nodePadding?: Parameters<D3SankeyProps['nodePadding']>[0]
+  nodeSort?: Parameters<D3SankeyProps['nodeSort']>[0]
   extent?: Parameters<D3SankeyProps['extent']>[0]
   iterations?: Parameters<D3SankeyProps['iterations']>[0]
   circularLinkGap?: any
@@ -36,18 +36,20 @@ const Sankey = ({
   nodeAlign,
   nodeWidth,
   nodePadding,
+  nodeSort,
   extent,
   iterations,
   children,
 }: SankeyProps) => {
 
-  const sankey = d3Sankey<SankeyNode, SankeyLink>()
+  const sankey = d3Sankey<SankeyNodeCustom, SankeyLinkCustom>()
 
   if (size) sankey.size(size);
   if (nodeId) sankey.nodeId(nodeId);
   if (nodeAlign) sankey.nodeAlign(nodeAlign);
   if (nodeWidth) sankey.nodeWidth(nodeWidth);
   if (nodePadding) sankey.nodePadding(nodePadding);
+  if (nodeSort) sankey.nodeSort(nodeSort)
   if (extent) sankey.extent(extent);
   if (iterations) sankey.iterations(iterations);
 

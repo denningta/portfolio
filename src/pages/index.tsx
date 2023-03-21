@@ -4,11 +4,10 @@ import Layout from '@/components/Layout'
 import Hero from '@/components/Hero'
 import Bio from '@/components/Bio'
 import Skills from '@/components/Skills'
-import SankeyChart from '@/components/SankeyChart'
+import SankeyChart from '@/components/sankey-diagram/SankeyChart'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import getSankeyData from '@/sanity-queries/getSankeyData'
-import { SankeyData } from '@/components/Sankey'
-import testData from '../components/sankey-data'
+import { SankeyData } from '@/components/sankey-diagram/Sankey'
 import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -33,7 +32,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
         <Layout>
           <Hero />
           <Bio />
-          <SankeyChart data={data} width={600} height={800} />
+          <SankeyChart data={data} width={600} height={1000} />
           <Skills />
         </Layout>
       </main>
