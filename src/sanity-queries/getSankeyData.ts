@@ -29,7 +29,8 @@ const getSankeyData = async () => {
       } | {
         "nodes": nodes[] | {
           "name": title,
-          "id": slug.current
+          "id": slug.current,
+          "color": iconColor
         },
         "links": linkdata[].links[] + linkdata[].sublinks[].links[],
       }

@@ -1,16 +1,22 @@
 import { tailwindColors } from "@/lib/tailwind-config"
-import { SankeyLink, sankeyLinkHorizontal } from "d3-sankey"
-import { useContext, useState } from "react"
-import { DarkModeContext } from "../DarkModeContext"
+import { SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey"
+import { useState } from "react"
 import { SankeyLinkCustom, SankeyNodeCustom } from "./Sankey"
 
-export interface LinkProps {
+export interface SankeyLinkComponentProps {
   link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom>
+  fill?: string | undefined
+  opacity?: string | number | undefined
+  onHoverChange?: ((link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom> | undefined) => void)
 }
 
-const SankeyLinkComponent = ({ link }: LinkProps) => {
-  const darkMode = useContext(DarkModeContext)
-  const [linkHover, setLinkHover] = useState(false)
+const SankeyLinkComponent = ({
+  link,
+  fill,
+  opacity,
+  onHoverChange = () => { }
+}: SankeyLinkComponentProps) => {
+  const [hover, setHover] = useState(false)
 
   const path = sankeyLinkHorizontal()
     .source((d) => {
@@ -25,30 +31,21 @@ const SankeyLinkComponent = ({ link }: LinkProps) => {
     })
 
   const handleMouseEnterLink = () => {
-    setLinkHover(true)
+    onHoverChange(link)
   }
 
   const handleMouseLeaveLink = () => {
-    setLinkHover(false)
+    onHoverChange(undefined)
   }
-
-  const handleLinkColor = () => {
-    if (!linkHover) {
-      return darkMode ? tailwindColors.neutral['100'] : tailwindColors.neutral['900']
-    }
-
-    return tailwindColors.rose['500']
-  }
-
 
   return (
     <>
       <path
         d={path(link) ?? undefined}
-        stroke={handleLinkColor()}
+        stroke={fill}
         strokeWidth={Math.max(1, link.width ?? 0)}
         fill="none"
-        opacity={0.15}
+        opacity={opacity}
         onMouseEnter={handleMouseEnterLink}
         onMouseLeave={handleMouseLeaveLink}
       />
