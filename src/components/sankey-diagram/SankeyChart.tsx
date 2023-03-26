@@ -94,6 +94,7 @@ const SankeyChart = ({
       link.target.id
     ])
 
+
     setActiveLinkIds(link.index !== undefined ? [link.index] : undefined)
   }
 

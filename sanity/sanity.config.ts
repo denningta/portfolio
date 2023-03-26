@@ -5,6 +5,13 @@ import { schemaTypes } from './schemas'
 import { iconPicker } from 'sanity-plugin-icon-picker'
 import { colorInput } from '@sanity/color-input'
 import CustomField from './components/ProjectReferenceField'
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import customDeskToolOptions from './desk-tool'
+
+
+const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
+
+const singletonTypes = new Set(['me'])
 
 export default defineConfig({
   name: 'default',
@@ -14,10 +21,11 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    deskTool(),
+    deskTool(customDeskToolOptions),
     visionTool(),
     iconPicker(),
     colorInput(),
+    unsplashImageAsset(),
   ],
 
   schema: {

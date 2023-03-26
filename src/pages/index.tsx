@@ -3,22 +3,22 @@ import { Inter } from 'next/font/google'
 import Layout from '@/components/Layout'
 import Hero from '@/components/Hero'
 import Bio from '@/components/Bio'
-import Skills from '@/components/Skills'
 import SankeyChart from '@/components/sankey-diagram/SankeyChart'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import getSankeyData from '@/sanity-queries/getSankeyData'
 import { SankeyData } from '@/components/sankey-diagram/Sankey'
 import { useEffect, useState } from 'react'
+import getMe from '@/sanity-queries/getMe'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
-  const [data, setData] = useState<SankeyData | undefined>(undefined)
+  const [sankeyData, setSankeyData] = useState<SankeyData | undefined>(undefined)
 
   useEffect(() => {
-    setData(props.data)
-  }, [props.data])
+    setSankeyData(props.sankeyData)
+  }, [props.sankeyData])
 
   return (
     <>
@@ -30,20 +30,25 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
       </Head>
       <main className={`h-screen`}>
         <Layout>
-          <Hero />
+          <Hero data={props.me} />
           <Bio />
-          <SankeyChart data={data} width={600} height={1000} />
-          <Skills />
+          <SankeyChart data={sankeyData} width={600} height={1000} />
         </Layout>
       </main>
     </>
   )
 }
 
-export const getStaticProps: GetStaticProps<{ data: SankeyData }> = async (context) => {
+type HomePageStaticProps = GetStaticProps<{
+  sankeyData: SankeyData,
+  me: Sanity.Default.Schema.Me
+}>
+
+export const getStaticProps: HomePageStaticProps = async (context) => {
   const sankeyData: SankeyData = await getSankeyData()
+  const me = await getMe()
 
   return {
-    props: { data: sankeyData }
+    props: { sankeyData, me }
   }
 }

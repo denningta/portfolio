@@ -1,6 +1,7 @@
+import { SankeyData } from '@/components/sankey-diagram/Sankey'
 import client from '../lib/sanity-client'
 
-const getSankeyData = async () => {
+const getSankeyData = async (): Promise<SankeyData> => {
   try {
     const response = await client.fetch(`
       {
@@ -40,6 +41,7 @@ const getSankeyData = async () => {
 
   } catch (error: any) {
     console.log(error)
+    return error
   }
 }
 
