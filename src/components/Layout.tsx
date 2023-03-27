@@ -31,19 +31,9 @@ export default function Layout({ children }: LayoutProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-0 left-0 w-full flex flex-col justify-center items-center"
+        className="z-50 fixed top-0 left-0 w-full flex flex-col justify-center items-center"
       >
         <NavBar height={navBarHeight} darkModeButton={darkModeButton} />
-        {/* <div  */}
-        {/*     className={` */}
-        {/*         w-full h-[2px]  */}
-        {/*         opacity-50 */}
-        {/*         bg-neutral-300 */}
-        {/*         dark:bg-black */}
-        {/*         transition ease-in-out */}
-        {/*         drop-shadow-sm */}
-        {/*     `} */}
-        {/* ></div> */}
       </motion.div>
       <div className="max-w-xl mx-auto" style={{ marginTop: navBarHeight + 30 }}>
         <DarkModeContext.Provider value={darkMode}>

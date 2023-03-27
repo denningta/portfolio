@@ -31,7 +31,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
       <main className={`h-screen`}>
         <Layout>
           <Hero data={props.me} />
-          <Bio />
+          <Bio data={props.me} />
           <SankeyChart data={sankeyData} width={600} height={1000} />
         </Layout>
       </main>

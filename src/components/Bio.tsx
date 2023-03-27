@@ -1,19 +1,20 @@
+import { PortableText } from "@portabletext/react"
 import Heading from "./Heading"
 
-const Bio = () => {
-    return (
+export interface BioProps {
+  data: Sanity.Default.Schema.Me
+}
+
+const Bio = ({ data }: BioProps) => {
+  return (
+    <div>
+      {data && data.bio &&
         <div>
-            <Heading text="Bio" /> 
-            <div>
-               Hi, I am Tim Denning and I build technology for manufacturers and engineers. 
-            </div>
-            <div>
-                After 5 years in the military, I joined Locheed Martin Space as a Quality Engineer working on the manufacturing floor.
-                Many of the problems I encountered were solvable by a software solution.
-                So, I started learning software development in my free time. 
-            </div>
+          <PortableText value={data.bio} />
         </div>
-    )
+      }
+    </div>
+  )
 }
 
 export default Bio

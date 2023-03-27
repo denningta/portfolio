@@ -21,8 +21,7 @@ const Button = ({ title, icon }: ButtonProps) => {
   return (
     <div
       className={`
-        w-fit rounded bg-gradient-to-b 
-        from-rose-300 via-rose-600 to-red-900
+        w-fit rounded bg-gradient-to-b from-sky-200 to-blue-800 drop-shadow 
       `}
     >
       <button
@@ -32,8 +31,7 @@ const Button = ({ title, icon }: ButtonProps) => {
           px-3 py-1 rounded
           transition ease-in-out
           text-white
-          bg-gradient-to-bl
-          from-rose-600 to-red-700
+          bg-blue-500
         `}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

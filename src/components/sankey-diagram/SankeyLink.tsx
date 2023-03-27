@@ -7,7 +7,7 @@ export interface SankeyLinkComponentProps {
   link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom>
   fill?: string | undefined
   opacity?: string | number | undefined
-  onHoverChange?: ((link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom> | undefined) => void)
+  onHoverChange?: (link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom> | undefined) => void
 }
 
 const SankeyLinkComponent = ({

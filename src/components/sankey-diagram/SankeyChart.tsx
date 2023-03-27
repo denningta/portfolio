@@ -4,12 +4,35 @@ import { SankeyLink, SankeyNode } from "d3-sankey"
 import { useState } from "react"
 import SankeyLinkComponent, { SankeyLinkComponentProps } from "./SankeyLink"
 import SankeyNodeComponent, { SankeyNodeComponentProps } from "./SankeyNodeComponent"
+import useSankeyHover from "@/hooks/useSankeyHover"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
   width: number
   height: number
   margin?: { top: number, left: number, right: number, bottom: number }
+}
+
+const nodeStyle = {
+  default: {
+    fill: 'black',
+    opacity: 0.7
+  },
+  hover: {
+    fill: 'black',
+    opacity: 1
+  }
+}
+
+const linkStyle = {
+  default: {
+    fill: 'black',
+    opacity: 0.1
+  },
+  hover: {
+    fill: 'black',
+    opacity: 0.5
+  }
 }
 
 const SankeyChart = ({
@@ -23,93 +46,15 @@ const SankeyChart = ({
     bottom: 0
   }
 }: SankeyChartProps) => {
-  const [activeNodeIds, setActiveNodeIds] = useState<string[] | undefined>(undefined)
-  const [activeLinkIds, setActiveLinkIds] = useState<number[] | undefined>(undefined)
-
-  const handleNodeHoverChange: SankeyNodeComponentProps['onHoverChange'] = (node) => {
-    console.log(node)
-    if (!node) {
-      setActiveNodeIds(undefined)
-      setActiveLinkIds(undefined)
-      return
-    }
-
-    const nodeIds = []
-    const linkIds = []
-
-    if (node.sourceLinks) {
-      nodeIds.push(
-        node.id,
-        ...node.sourceLinks.map((link: any) => link.target.id as string),
-      )
-      linkIds.push(
-        ...node.sourceLinks.map((link: any) => link.index)
-      )
-    }
-
-    if (node.targetLinks) {
-      nodeIds.push(
-        node.id,
-        ...node.targetLinks.map((link: any) => link.source.id as string)
-      )
-      linkIds.push(
-        ...node.targetLinks.map((link: any) => link.index as string)
-      )
-    }
-
-    setActiveNodeIds(nodeIds)
-    setActiveLinkIds(linkIds)
-  }
-
-  const handleNodeOpacity = (node: SankeyNode<SankeyNodeCustom, SankeyLinkCustom>) => {
-    if (!activeNodeIds) return 0.7
-    if (!activeNodeIds.length) return 0.7
-
-    if (activeNodeIds.includes(node.id)) return 1
-
-    return 0.7
-  }
-
-  const handleNodeColor = (node: SankeyNode<SankeyNodeCustom, SankeyLinkCustom>) => {
-    if (!activeNodeIds) return
-    if (!activeNodeIds.length) return
-
-    if (activeNodeIds.includes(node.id)) {
-      return 'black'
-    }
-
-    return
-  }
-
-  const handleLinkHoverChange: SankeyLinkComponentProps['onHoverChange'] = (link) => {
-
-    if (!link) {
-      setActiveNodeIds(undefined)
-      setActiveLinkIds(undefined)
-      return
-    }
-
-    setActiveNodeIds([
-      link.source.id,
-      link.target.id
-    ])
-
-
-    setActiveLinkIds(link.index !== undefined ? [link.index] : undefined)
-  }
-
-  const handleLinkColor = (link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom>) => {
-
-    return 'black'
-
-  }
-
-  const handleLinkOpacity = (link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom>) => {
-    if (!activeLinkIds) return 0.12
-    if (link.index === undefined) return 0.12
-    if (activeLinkIds.includes(link.index)) return 0.25
-    return 0.12
-  }
+  const {
+    handleNodeHoverChange,
+    handleLinkHoverChange,
+    handleLinkStyle,
+    handleNodeStyle,
+  } = useSankeyHover({
+    nodeStyle: nodeStyle,
+    linkStyle: linkStyle
+  })
 
   return (
     <svg
@@ -139,8 +84,8 @@ const SankeyChart = ({
                 node={node}
                 containerWidth={width}
                 onHoverChange={handleNodeHoverChange}
-                fill={handleNodeColor(node)}
-                opacity={handleNodeOpacity(node)}
+                fill={handleNodeStyle(node).fill}
+                opacity={handleNodeStyle(node).opacity}
               />
             )}
 
@@ -150,8 +95,8 @@ const SankeyChart = ({
                   key={`link-${i}`}
                   link={link}
                   onHoverChange={handleLinkHoverChange}
-                  fill={handleLinkColor(link)}
-                  opacity={handleLinkOpacity(link)}
+                  fill={handleLinkStyle(link).fill}
+                  opacity={handleLinkStyle(link).opacity}
                 />
               )}
             </Group>
