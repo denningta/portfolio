@@ -35,6 +35,11 @@ export default defineType({
       type: 'number'
     }),
     defineField({
+      name: 'shortDesc',
+      title: 'Short Description',
+      type: 'string'
+    }),
+    defineField({
       name: 'references',
       title: 'Projects',
       type: 'array',

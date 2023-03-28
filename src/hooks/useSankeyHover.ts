@@ -1,6 +1,6 @@
-import { SankeyNodeCustom, SankeyLinkCustom } from "@/components/sankey-diagram/Sankey"
 import { SankeyLinkComponentProps } from "@/components/sankey-diagram/SankeyLink"
 import { SankeyNodeComponentProps } from "@/components/sankey-diagram/SankeyNodeComponent"
+import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
 import { SankeyNode, SankeyLink } from "d3-sankey"
 import { useState } from "react"
 
@@ -30,14 +30,19 @@ export interface UseSankeyHoverProps {
 const useSankeyHover = ({ nodeStyle, linkStyle }: UseSankeyHoverProps) => {
   const [activeNodeIds, setActiveNodeIds] = useState<string[] | undefined>(undefined)
   const [activeLinkIds, setActiveLinkIds] = useState<number[] | undefined>(undefined)
+  const [activeNode, setActiveNode] = useState<SankeyNode<SankeyNodeCustom, SankeyLinkCustom> | undefined>(undefined)
+
+
 
   const handleNodeHoverChange: SankeyNodeComponentProps['onHoverChange'] = (node) => {
-    console.log(node)
     if (!node) {
       setActiveNodeIds(undefined)
       setActiveLinkIds(undefined)
+      setActiveNode(undefined)
       return
     }
+
+    setActiveNode(node)
 
     const nodeIds = []
     const linkIds = []
@@ -104,7 +109,8 @@ const useSankeyHover = ({ nodeStyle, linkStyle }: UseSankeyHoverProps) => {
     handleNodeHoverChange,
     handleLinkHoverChange,
     handleNodeStyle,
-    handleLinkStyle
+    handleLinkStyle,
+    activeNode
   }
 
 }

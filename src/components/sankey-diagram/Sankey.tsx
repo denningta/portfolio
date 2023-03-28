@@ -1,9 +1,9 @@
 import { sankey as d3Sankey, SankeyLayout, SankeyGraph } from "d3-sankey"
 import { HierarchyDefaultNode as DefaultNode } from "@visx/hierarchy"
 import { Group } from "@visx/group"
+import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
 
-export interface SankeyNodeCustom { name: string, id: string, color: { hex: string, alpha: number } }
-export interface SankeyLinkCustom { source: number | string, target: number | string, value: number }
+
 
 export type SankeyData = SankeyGraph<SankeyNodeCustom, SankeyLinkCustom>
 type D3SankeyProps = SankeyLayout<SankeyData, SankeyNodeCustom, SankeyLinkCustom>

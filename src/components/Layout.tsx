@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DarkModeButton from "./DarkModeButton";
 import { DarkModeContext } from "./DarkModeContext";
 import Footer from "./Footer";
@@ -13,7 +13,17 @@ export default function Layout({ children }: LayoutProps) {
   const navBarHeight = 50
   const [darkMode, setDarkMode] = useState(false)
 
+  useEffect(() => {
+    console.log(localStorage.darkMode)
+    if (localStorage.darkMode === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setDarkMode(true)
+    } else {
+      setDarkMode(false)
+    }
+  }, [])
+
   const handleDarkModeChange = () => {
+    localStorage.darkMode = !darkMode
     setDarkMode(!darkMode)
   }
 
