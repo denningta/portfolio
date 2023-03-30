@@ -9,6 +9,8 @@ import getSankeyData from '@/sanity-queries/getSankeyData'
 import { SankeyData } from '@/components/sankey-diagram/Sankey'
 import { useEffect, useState } from 'react'
 import getMe from '@/sanity-queries/getMe'
+import FeaturedPosts from '@/components/FeaturedPosts'
+import getFeaturedPosts from '@/sanity-queries/getFeaturedPosts'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +35,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
           <Hero data={props.me} />
           <Bio data={props.me} />
           <SankeyChart data={sankeyData} width={600} height={1000} />
+          <FeaturedPosts posts={props.featuredPosts} />
         </Layout>
       </main>
     </>
@@ -42,13 +45,15 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 type HomePageStaticProps = GetStaticProps<{
   sankeyData: SankeyData,
   me: Sanity.Default.Schema.Me
+  featuredPosts: Sanity.Default.Schema.Post[]
 }>
 
 export const getStaticProps: HomePageStaticProps = async (context) => {
   const sankeyData: SankeyData = await getSankeyData()
   const me = await getMe()
+  const featuredPosts = await getFeaturedPosts()
 
   return {
-    props: { sankeyData, me }
+    props: { sankeyData, me, featuredPosts }
   }
 }

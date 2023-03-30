@@ -4,10 +4,11 @@ import SankeyLinkComponent from "./SankeyLink"
 import SankeyNodeComponent from "./SankeyNodeComponent"
 import useSankeyHover from "@/hooks/useSankeyHover"
 import { defaultStyles, TooltipWithBounds, useTooltip, useTooltipInPortal } from "@visx/tooltip"
-import { useCallback, useContext, useRef } from "react"
+import { useCallback, useContext } from "react"
 import NodeTooltip from "./NodeTooltip"
 import { DarkModeContext } from "../DarkModeContext"
 import { tailwindColors } from "@/lib/tailwind-config"
+import { Zoom } from "@visx/zoom"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
@@ -53,6 +54,15 @@ const SankeyChart = ({
     }
   }
 
+  const initialTransform = {
+    scaleX: 1.27,
+    scaleY: 1.27,
+    translateX: -211.62,
+    translateY: 162.59,
+    skewX: 0,
+    skewY: 0,
+  };
+
   const {
     handleNodeHoverChange,
     handleLinkHoverChange,
@@ -67,9 +77,6 @@ const SankeyChart = ({
 
   const {
     showTooltip,
-    hideTooltip,
-    tooltipOpen,
-    tooltipData,
     tooltipLeft = 0,
     tooltipTop = 0,
   } = useTooltip<string>({
@@ -80,7 +87,7 @@ const SankeyChart = ({
     tooltipData: 'Move me with your mouse or finger',
   });
 
-  const { containerRef, containerBounds, TooltipInPortal } = useTooltipInPortal({
+  const { containerRef, containerBounds } = useTooltipInPortal({
     scroll: true,
     detectBounds: true,
   });
@@ -101,7 +108,7 @@ const SankeyChart = ({
 
 
   return (
-    <div className="relative" ref={containerRef} onPointerMove={handlePointerMove}>
+    <div className="relative select-none" ref={containerRef} onPointerMove={handlePointerMove}>
       {activeNode &&
         <TooltipWithBounds
           key={Math.random()}
@@ -112,6 +119,7 @@ const SankeyChart = ({
           <NodeTooltip node={activeNode} />
         </TooltipWithBounds>
       }
+
       <svg
         width={width + margin.left + margin.right}
         height={height + margin.top + margin.bottom}

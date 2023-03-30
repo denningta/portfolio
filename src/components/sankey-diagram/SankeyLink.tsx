@@ -1,7 +1,5 @@
-import { tailwindColors } from "@/lib/tailwind-config"
-import { SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey"
-import { useState } from "react"
-import { SankeyLinkCustom, SankeyNodeCustom } from "./Sankey"
+import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
+import { SankeyLink, sankeyLinkHorizontal } from "d3-sankey"
 
 export interface SankeyLinkComponentProps {
   link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom>
@@ -16,7 +14,6 @@ const SankeyLinkComponent = ({
   opacity,
   onHoverChange = () => { }
 }: SankeyLinkComponentProps) => {
-  const [hover, setHover] = useState(false)
 
   const path = sankeyLinkHorizontal()
     .source((d) => {

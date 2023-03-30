@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './schemas'
 import { iconPicker } from 'sanity-plugin-icon-picker'
 import { colorInput } from '@sanity/color-input'
+import { codeInput } from '@sanity/code-input'
 import CustomField from './components/ProjectReferenceField'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import customDeskToolOptions from './desk-tool'
@@ -26,6 +27,7 @@ export default defineConfig({
     iconPicker(),
     colorInput(),
     unsplashImageAsset(),
+    codeInput(),
   ],
 
   schema: {

@@ -26,6 +26,11 @@ export default defineType({
       to: { type: 'author' },
     }),
     defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'string'
+    }),
+    defineField({
       name: 'mainImage',
       title: 'Main image',
       type: 'image',
@@ -43,6 +48,12 @@ export default defineType({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured Post?',
+      description: 'Check to pin this post to the featured list',
+      type: 'boolean'
     }),
     defineField({
       name: 'body',

@@ -1,6 +1,5 @@
 import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
 import { SankeyNode } from "d3-sankey"
-import { CSSProperties } from "react"
 import { SiIcon } from "../../../public/sanity-icon-picker"
 
 interface NodeTooltipProps {

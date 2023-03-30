@@ -14,7 +14,6 @@ export default function Layout({ children }: LayoutProps) {
   const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
-    console.log(localStorage.darkMode)
     if (localStorage.darkMode === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       setDarkMode(true)
     } else {

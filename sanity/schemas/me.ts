@@ -19,6 +19,11 @@ const me = defineType({
       }
     }),
     defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string'
+    }),
+    defineField({
       name: 'photo',
       title: 'Profile Photo',
       type: 'image',

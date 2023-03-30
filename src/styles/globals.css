@@ -8,3 +8,43 @@ html {
     transition-duration: 150ms;
 }
 
+
+.portable-text h1 {
+  @apply text-4xl font-extrabold mt-10;
+}
+
+.portable-text h2 {
+  @apply text-3xl font-extrabold mt-10;
+}
+
+.portable-text h3 {
+  @apply text-2xl font-extrabold mt-10;
+}
+
+.portable-text h4 {
+  @apply text-xl font-extrabold mt-10;
+}
+
+.portable-text p {
+  @apply mt-4 leading-loose text-lg;
+}
+
+.portable-text blockquote {
+  @apply mt-4 pl-6 border-l-4 border-white/50 italic;
+}
+
+.portable-text ul {
+  @apply mt-4 list-disc ml-10 text-lg;
+}
+
+.portable-text li {
+  @apply mt-3;
+}
+
+.portable-text a {
+  @apply text-sky-500 hover:text-sky-300 underline underline-offset-4;
+}
+
+.portable-text strong {
+  @apply font-extrabold;
+}
