@@ -1,16 +1,15 @@
 import client from "@/lib/sanity-client"
+import { Post } from "./getPost"
 
-const getFeaturedPosts = async (): Promise<Sanity.Default.Schema.Post[]> => {
+const getFeaturedPosts = async (): Promise<Post[]> => {
   try {
     const res = await client.fetch(`
       *[_type == 'post' && featured == true]
     `)
 
-    console.log(res)
     return res
 
   } catch (e: any) {
-    console.log(e)
     return e
   }
 

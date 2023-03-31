@@ -1,29 +1,28 @@
 import Layout from "@/components/Layout"
+import Posts from "@/components/Posts"
+import { getPosts, Post } from "@/sanity-queries/getPost"
 import { InferGetStaticPropsType, GetStaticProps } from "next"
-import Post from "../../../sanity/schemas/post"
 
 const WritingPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(props)
 
   return (
-    <Layout>
+    <Layout animateChildren={false}>
+      <Posts posts={props.posts} />
       <div></div>
     </Layout>
   )
 }
 
-export const getStaticPaths = async () => {
-  return {
-  }
-}
-
 type WritingPageStaticProps = GetStaticProps<{
+  posts: Post[]
 }>
 
 export const getStaticProps: WritingPageStaticProps = async (context) => {
+  const posts = await getPosts()
 
   return {
     props: {
+      posts
     }
   }
 }

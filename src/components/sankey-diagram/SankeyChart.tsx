@@ -8,7 +8,7 @@ import { useCallback, useContext } from "react"
 import NodeTooltip from "./NodeTooltip"
 import { DarkModeContext } from "../DarkModeContext"
 import { tailwindColors } from "@/lib/tailwind-config"
-import { Zoom } from "@visx/zoom"
+import Heading from "../Heading"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
@@ -53,15 +53,6 @@ const SankeyChart = ({
       opacity: 0.5
     }
   }
-
-  const initialTransform = {
-    scaleX: 1.27,
-    scaleY: 1.27,
-    translateX: -211.62,
-    translateY: 162.59,
-    skewX: 0,
-    skewY: 0,
-  };
 
   const {
     handleNodeHoverChange,
@@ -109,6 +100,11 @@ const SankeyChart = ({
 
   return (
     <div className="relative select-none" ref={containerRef} onPointerMove={handlePointerMove}>
+      <div className="grid grid-cols-3 w-full">
+        <Heading>Work</Heading>
+        <Heading className="flex justify-center">Projects</Heading>
+        <Heading className="flex justify-end">Skills</Heading>
+      </div>
       {activeNode &&
         <TooltipWithBounds
           key={Math.random()}

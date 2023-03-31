@@ -7,9 +7,10 @@ import NavBar from "./Navbar";
 
 export interface LayoutProps {
   children: JSX.Element | JSX.Element[]
+  animateChildren?: boolean
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, animateChildren = true }: LayoutProps) {
   const navBarHeight = 50
   const [darkMode, setDarkMode] = useState(false)
 
@@ -47,15 +48,18 @@ export default function Layout({ children }: LayoutProps) {
       <div className="max-w-xl mx-auto" style={{ marginTop: navBarHeight + 30 }}>
         <DarkModeContext.Provider value={darkMode}>
           {Array.isArray(children) && children.map((child, index) =>
-            <motion.div
-              key={`child-${index}`}
-              className="my-10"
-              initial={{ opacity: 0, scale: 1.02 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
-            >
-              {child}
-            </motion.div>
+            animateChildren ?
+              <motion.div
+                key={`child-${index}`}
+                className="my-10"
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
+              >
+                {child}
+              </motion.div>
+              :
+              <div>{child}</div>
           )}
         </DarkModeContext.Provider>
       </div>

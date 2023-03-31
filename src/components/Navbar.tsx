@@ -12,7 +12,7 @@ const NavBar = ({ darkModeButton, height }: NavBarProps) => {
   const name = 'Tim Denning'
   const navItems: NavItemProps[] = [
     { title: 'Projects', href: '#', },
-    { title: 'Writing', href: '#', },
+    { title: 'Writing', href: '/writing', },
     { title: 'Resume', href: '#' },
     { title: 'Github', href: '#', icon: FaGithub },
   ]
@@ -37,13 +37,16 @@ const NavBar = ({ darkModeButton, height }: NavBarProps) => {
           </div>
         </div>
       </Link>
-      <div className="grow flex mx-6">
+      <div className="hidden grow sm:flex mx-6">
         {navItems.map((navItemProps, i) =>
           <NavItem key={`navItem-${i}`} className="mr-3"  {...navItemProps} />
         )}
       </div>
-      <div className="">
+      <div className="hidden sm:flex mr-4">
         {darkModeButton}
+      </div>
+      <div className="grow sm:hidden flex justify-end mr-4">
+        menu
       </div>
 
     </div>

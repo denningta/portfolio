@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout"
 import Post from "@/components/Post"
-import getPost from "@/sanity-queries/getPost"
+import { getPost } from "@/sanity-queries/getPost"
 import getPostPaths from "@/sanity-queries/getPostPaths"
 import { GetStaticProps, InferGetStaticPropsType } from "next"
 

@@ -11,8 +11,7 @@ import { useEffect, useState } from 'react'
 import getMe from '@/sanity-queries/getMe'
 import FeaturedPosts from '@/components/FeaturedPosts'
 import getFeaturedPosts from '@/sanity-queries/getFeaturedPosts'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Post } from '@/sanity-queries/getPost'
 
 export default function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -45,7 +44,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 type HomePageStaticProps = GetStaticProps<{
   sankeyData: SankeyData,
   me: Sanity.Default.Schema.Me
-  featuredPosts: Sanity.Default.Schema.Post[]
+  featuredPosts: Post[]
 }>
 
 export const getStaticProps: HomePageStaticProps = async (context) => {
