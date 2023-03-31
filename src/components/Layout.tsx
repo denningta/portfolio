@@ -36,7 +36,7 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
   const darkModeButton = <DarkModeButton darkMode={darkMode} onDarkModeChanged={handleDarkModeChange} />
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto px-4 sm:px-0">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
