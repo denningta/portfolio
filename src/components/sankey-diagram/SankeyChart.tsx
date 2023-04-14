@@ -97,51 +97,52 @@ const SankeyChart = ({
         <ParentSize debounceTime={10}>
           {(parent) => {
             if (!parent) return
-            console.log(parent)
             return (
               <svg
                 width={parent.width + margin.left + margin.right}
                 height={parent.height + margin.top + margin.bottom}
               >
-                {data && <Sankey
-                  top={margin.top}
-                  left={margin.left}
-                  data={data}
-                  size={[parent.width, parent.height]}
-                  nodeWidth={15}
-                  nodePadding={10}
-                  extent={[
-                    [1, 1],
-                    [parent.width - 1, parent.height - 6]
-                  ]}
-                  nodeId={(d) => d.id}
-                  nodeSort={() => undefined}
-                >
-                  {(data) => (
-                    <Group>
-                      {data.links.map((link, i) =>
-                        <SankeyLinkComponent
-                          key={`link-${i}`}
-                          link={link}
-                          onHoverChange={handleLinkHoverChange}
-                          fill={handleLinkStyle(link).fill}
-                          opacity={handleLinkStyle(link).opacity}
-                        />
-                      )}
+                {data &&
+                  <Sankey
+                    top={margin.top}
+                    left={margin.left}
+                    data={data}
+                    size={[parent.width, parent.height]}
+                    nodeWidth={15}
+                    nodePadding={10}
+                    extent={[
+                      [1, 1],
+                      [parent.width - 1, parent.height - 6]
+                    ]}
+                    nodeId={(d) => d.id}
+                    nodeSort={() => undefined}
+                  >
+                    {(data) => (
+                      <Group>
+                        {data.links.map((link, i) =>
+                          <SankeyLinkComponent
+                            key={`link-${i}`}
+                            link={link}
+                            onHoverChange={handleLinkHoverChange}
+                            fill={handleLinkStyle(link).fill}
+                            opacity={handleLinkStyle(link).opacity}
+                          />
+                        )}
 
-                      {data.nodes.map((node, i) =>
-                        <SankeyNodeComponent
-                          key={`node-${i}`}
-                          node={node}
-                          containerWidth={parent.width}
-                          onHoverChange={handleNodeHoverChange}
-                          fill={handleNodeStyle(node).fill}
-                          opacity={handleNodeStyle(node).opacity}
-                        />
-                      )}
-                    </Group>
-                  )}
-                </Sankey>}
+                        {data.nodes.map((node, i) =>
+                          <SankeyNodeComponent
+                            key={`node-${i}`}
+                            node={node}
+                            containerWidth={parent.width}
+                            onHoverChange={handleNodeHoverChange}
+                            fill={handleNodeStyle(node).fill}
+                            opacity={handleNodeStyle(node).opacity}
+                          />
+                        )}
+                      </Group>
+                    )}
+                  </Sankey>
+                }
               </svg>
             )
           }}

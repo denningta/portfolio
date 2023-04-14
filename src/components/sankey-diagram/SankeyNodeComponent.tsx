@@ -34,6 +34,10 @@ const SankeyNodeComponent = ({
     onHoverChange(undefined)
   }
 
+  const textX = (node.x0 ?? 0) > 1 ? '-5' : '18'
+  const textY = nodeHeight / 2
+  const textWidth = (node.x0 ?? 0) > (containerWidth - 50) ? 300 : 130
+
   return (
     <>
       <Group top={node.y0} left={node.x0}>
@@ -47,15 +51,15 @@ const SankeyNodeComponent = ({
           onMouseLeave={handleMouseLeave}
         />
         <Text
-          x={(node.x0 ?? 0) > 1 ? '-5' : '18'}
-          y={nodeHeight / 2}
+          x={textX}
+          y={textY}
           verticalAnchor="middle"
           textAnchor={(node.x0 ?? 0) > 1 ? 'end' : 'start'}
           fontSize={isMobile ? 10 : 14}
           fill={fill}
           className="bg-sky-500"
           opacity={opacity}
-          width={(node.x0 ?? 0) > (containerWidth - 50) ? 300 : 130}
+          width={textWidth}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

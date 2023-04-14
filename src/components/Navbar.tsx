@@ -1,21 +1,25 @@
 import { GiAstronautHelmet } from 'react-icons/gi'
 import NavItem, { NavItemProps } from './Navitem'
-import { FaGithub } from 'react-icons/fa'
 import Link from 'next/link'
+import MenuButton from './MenuButton'
+import { motion, useCycle } from 'framer-motion'
 
 export interface NavBarProps {
   darkModeButton: JSX.Element
   height: number
+  navItems: NavItemProps[]
+  isMenuOpen: boolean
+  onMenuToggle?: () => void
 }
 
-const NavBar = ({ darkModeButton, height }: NavBarProps) => {
+const NavBar = ({
+  navItems,
+  darkModeButton,
+  height,
+  isMenuOpen,
+  onMenuToggle = () => { }
+}: NavBarProps) => {
   const name = 'Tim Denning'
-  const navItems: NavItemProps[] = [
-    { title: 'Projects', href: '#', },
-    { title: 'Writing', href: '/writing', },
-    { title: 'Resume', href: '#' },
-    { title: 'Github', href: '#', icon: FaGithub },
-  ]
 
   return (
     <div
@@ -45,11 +49,21 @@ const NavBar = ({ darkModeButton, height }: NavBarProps) => {
       <div className="hidden sm:flex mr-4">
         {darkModeButton}
       </div>
-      <div className="grow sm:hidden flex justify-end mr-4">
-        menu
-      </div>
 
-    </div>
+      <div className="static grow sm:hidden flex items-center justify-end mr-4">
+        <motion.nav
+          initial={false}
+          animate={isMenuOpen ? 'open' : 'closed'}
+        >
+          <MenuButton
+            toggle={() => {
+              onMenuToggle()
+            }}
+          />
+        </motion.nav>
+      </div >
+
+    </div >
   )
 }
 
