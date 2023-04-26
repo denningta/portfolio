@@ -8,6 +8,8 @@ export interface BioProps {
 const Bio = ({ data }: BioProps) => {
   return (
     <div>
+      <Heading>Bio</Heading>
+
       {data && data.bio &&
         <div>
           <PortableText value={data.bio} />

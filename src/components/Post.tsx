@@ -7,7 +7,6 @@ export interface PostProps {
   post: Sanity.Default.Schema.Post
 }
 const Post = ({ post }: PostProps) => {
-  console.log(post)
 
   return (
     <div>

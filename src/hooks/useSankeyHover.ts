@@ -8,10 +8,12 @@ export interface UseSankeyHoverProps {
   nodeStyle: {
     default: {
       fill: string
+      textColor: string
       opacity: number
     }
     hover: {
       fill: string
+      textColor: string
       opacity: number
     }
   }

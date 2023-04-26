@@ -37,10 +37,12 @@ const SankeyChart = ({
   const nodeStyle = {
     default: {
       fill: darkMode ? 'white' : 'black',
+      textColor: darkMode ? 'white' : 'black',
       opacity: 0.7
     },
     hover: {
       fill: darkMode ? 'white' : 'black',
+      textColor: darkMode ? 'lightblue' : tailwindColors.blue['500'],
       opacity: 1
     }
   }
@@ -84,16 +86,6 @@ const SankeyChart = ({
       </div>
       <div className="relative select-none h-[600px]" ref={containerRef} onPointerMove={handlePointerMove}>
 
-        {/* {activeNode && */}
-        {/*   <TooltipWithBounds */}
-        {/*     key={Math.random()} */}
-        {/*     left={tooltipLeft} */}
-        {/*     top={tooltipTop} */}
-        {/*     style={{ ...defaultStyles, padding: 0, background: 'none', boxShadow: 'none' }} */}
-        {/*   > */}
-        {/*     <NodeTooltip node={activeNode} /> */}
-        {/*   </TooltipWithBounds> */}
-        {/* } */}
         <ParentSize debounceTime={10}>
           {(parent) => {
             if (!parent) return
@@ -136,6 +128,7 @@ const SankeyChart = ({
                             containerWidth={parent.width}
                             onHoverChange={handleNodeHoverChange}
                             fill={handleNodeStyle(node).fill}
+                            textColor={handleNodeStyle(node).textColor}
                             opacity={handleNodeStyle(node).opacity}
                           />
                         )}

@@ -41,7 +41,7 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
   const darkModeButton = <DarkModeButton darkMode={darkMode} onDarkModeChanged={handleDarkModeChange} />
 
   const navItems: NavItemProps[] = [
-    { title: 'Projects', href: '#', },
+    { title: 'Projects', href: '/projects', },
     { title: 'Writing', href: '/writing', },
     { title: 'Resume', href: '#' },
     { title: 'Github', href: '#', icon: FaGithub },
@@ -86,7 +86,7 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
                 {child}
               </motion.div>
               :
-              <div>{child}</div>
+              <div key={`child-${index}`}>{child}</div>
           )}
         </div>
         <motion.div

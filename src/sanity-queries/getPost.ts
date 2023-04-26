@@ -33,11 +33,19 @@ export const getPost = async (slug: string) => {
 }
 
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPosts = async (categories: string[]): Promise<Post[]> => {
   try {
+    if (!categories) {
+      const res = await client.fetch(`
+        *[_type == 'post'] ${postPipe} 
+      `)
+      return res
+    }
+
     const res = await client.fetch(`
-      *[_type == 'post'] ${postPipe} 
-    `)
+      *[_type == "post" && count((categories[]->slug.current)[@ in $categories]) > 0]
+    `, { categories: categories })
+
     return res
 
   } catch (e: any) {

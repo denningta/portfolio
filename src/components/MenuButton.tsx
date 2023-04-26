@@ -10,7 +10,6 @@ export interface MenuButtonProps {
 
 const Path = (props: React.ComponentProps<typeof motion.path>) => {
   const darkMode = useContext(DarkModeContext)
-  console.log(darkMode)
 
   return (
     <motion.path

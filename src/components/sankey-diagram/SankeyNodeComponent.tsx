@@ -10,6 +10,7 @@ export interface SankeyNodeComponentProps {
   containerWidth: number
   onHoverChange?: (node: SankeyNode<SankeyNodeCustom, SankeyLinkCustom> | undefined) => void
   fill?: string
+  textColor?: string
   opacity?: string | number | undefined
 }
 
@@ -18,6 +19,7 @@ const SankeyNodeComponent = ({
   containerWidth,
   onHoverChange = () => { },
   fill,
+  textColor,
   opacity
 }: SankeyNodeComponentProps) => {
 
@@ -56,7 +58,7 @@ const SankeyNodeComponent = ({
           verticalAnchor="middle"
           textAnchor={(node.x0 ?? 0) > 1 ? 'end' : 'start'}
           fontSize={isMobile ? 10 : 14}
-          fill={fill}
+          fill={textColor}
           className="bg-sky-500"
           opacity={opacity}
           width={textWidth}
