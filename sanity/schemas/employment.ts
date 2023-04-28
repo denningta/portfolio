@@ -40,6 +40,11 @@ export default defineType({
       type: 'string'
     }),
     defineField({
+      name: 'color',
+      title: 'Color',
+      type: 'color'
+    }),
+    defineField({
       name: 'references',
       title: 'Projects',
       type: 'array',

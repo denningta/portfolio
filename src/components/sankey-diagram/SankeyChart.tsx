@@ -11,6 +11,7 @@ import { tailwindColors } from "@/lib/tailwind-config"
 import Heading from "../Heading"
 import { ParentSize } from "@visx/responsive"
 import useCustomTooltip from "@/hooks/useCustomTooltip"
+import { useMediaQuery } from "react-responsive"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
@@ -42,7 +43,7 @@ const SankeyChart = ({
     },
     hover: {
       fill: darkMode ? 'white' : 'black',
-      textColor: darkMode ? 'lightblue' : tailwindColors.blue['500'],
+      textColor: darkMode ? tailwindColors.neutral['100'] : tailwindColors.blue['500'],
       opacity: 1
     }
   }
@@ -50,13 +51,15 @@ const SankeyChart = ({
   const linkStyle = {
     default: {
       fill: darkMode ? 'white' : 'black',
-      opacity: 0.1
+      opacity: 0.2
     },
     hover: {
       fill: darkMode ? tailwindColors.blue['500'] : 'lightblue',
-      opacity: 0.5
+      opacity: 1
     }
   }
+
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
   const {
     handleNodeHoverChange,
@@ -84,7 +87,22 @@ const SankeyChart = ({
         <Heading className="flex justify-center">Projects</Heading>
         <Heading className="flex justify-end">Skills</Heading>
       </div>
+
+
+
+
       <div className="relative select-none h-[600px]" ref={containerRef} onPointerMove={handlePointerMove}>
+
+        {activeNode && activeNode.y0 &&
+          <div
+            className="absolute left-1/2 -translate-x-1/2 m-0 text-black z-50 px-3 py-1 text-xs w-[300px] mt-[30px]"
+            style={{
+              bottom: activeNode.y0 < height / 3 ? 30 : 'auto',
+            }}
+          >
+            <NodeTooltip node={activeNode} />
+          </div>
+        }
 
         <ParentSize debounceTime={10}>
           {(parent) => {

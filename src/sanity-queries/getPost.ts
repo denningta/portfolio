@@ -33,7 +33,7 @@ export const getPost = async (slug: string) => {
 }
 
 
-export const getPosts = async (categories: string[]): Promise<Post[]> => {
+export const getPosts = async (categories?: string[]): Promise<Post[]> => {
   try {
     if (!categories) {
       const res = await client.fetch(`

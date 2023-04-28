@@ -25,6 +25,11 @@ export default defineType({
       to: [{ type: 'category' }]
     }),
     defineField({
+      name: 'color',
+      title: 'Color',
+      type: 'color'
+    }),
+    defineField({
       name: 'references',
       title: 'Skills',
       type: 'array',

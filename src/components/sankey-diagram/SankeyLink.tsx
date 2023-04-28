@@ -1,5 +1,7 @@
 import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
-import { SankeyLink, sankeyLinkHorizontal } from "d3-sankey"
+import { LinearGradient } from "@visx/gradient"
+import { SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey"
+import { url } from "inspector"
 
 export interface SankeyLinkComponentProps {
   link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom>
@@ -37,9 +39,15 @@ const SankeyLinkComponent = ({
 
   return (
     <>
+      <LinearGradient
+        id={`${link.index}`}
+        from={link.sourceColor && link.sourceColor.hex}
+        to={link.targetColor && link.targetColor.hex}
+        vertical={false}
+      />
       <path
         d={path(link) ?? undefined}
-        stroke={fill}
+        stroke={`url(#${link.index})`}
         strokeWidth={Math.max(1, link.width ?? 0)}
         fill="none"
         opacity={opacity}

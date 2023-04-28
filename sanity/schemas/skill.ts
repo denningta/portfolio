@@ -28,8 +28,8 @@ export default defineType({
       }
     }),
     defineField({
-      name: 'iconColor',
-      title: 'Icon Color',
+      name: 'color',
+      title: 'Color',
       type: 'color'
     }),
     defineField({

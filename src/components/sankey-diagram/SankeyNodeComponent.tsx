@@ -43,15 +43,16 @@ const SankeyNodeComponent = ({
   return (
     <>
       <Group top={node.y0} left={node.x0}>
-        <rect
-          width={nodeWidth}
-          height={nodeHeight}
-          fill={fill}
-          opacity={opacity}
-          rx={3}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        />
+        {nodeWidth > 0 && nodeHeight > 0 &&
+          <rect
+            width={nodeWidth}
+            height={nodeHeight}
+            fill={node.color ? node.color.hex : fill}
+            opacity={opacity}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+        }
         <Text
           x={textX}
           y={textY}
@@ -59,7 +60,6 @@ const SankeyNodeComponent = ({
           textAnchor={(node.x0 ?? 0) > 1 ? 'end' : 'start'}
           fontSize={isMobile ? 10 : 14}
           fill={textColor}
-          className="bg-sky-500"
           opacity={opacity}
           width={textWidth}
           onMouseEnter={handleMouseEnter}

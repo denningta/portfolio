@@ -13,8 +13,8 @@ export interface SankeyNodeCustom {
 }
 
 export interface SankeyLinkCustom {
-  source: number | string,
-  target: number | string,
+  sourceColor: { hex: string, alpha: number },
+  targetColor: { hex: string, alpha: number },
   value: number
 }
 
@@ -30,17 +30,22 @@ const getSankeyData = async (): Promise<SankeyData> => {
         "linkdata": *[_type == "sankey"].employment[]-> {
           "links": references[] {
             "source": ^.slug.current,
+            "sourceColor": ^.color,
             "target": project->slug.current,
+            "targetColor": project->color,
             "value": ^.years * (percent / 100),
           },
           "sublinks": references[] {
             "source": project->slug.current,
+            "sourceColor": project->color,
             "skills": project->references[],
             "value": ^.years * (percent / 100)
           } | {
             "links": skills[] {
               "source": ^.source,
+              "sourceColor": ^.sourceColor,
               "target": skill->slug.current,
+              "targetColor": skill->color,
               "value": ^.value * (percent / 100)
             }
           }
@@ -49,7 +54,7 @@ const getSankeyData = async (): Promise<SankeyData> => {
         "nodes": nodes[] | {
           "name": title,
           "id": slug.current,
-          "color": iconColor,
+          "color": color,
           start,
           end,
           shortDesc,
