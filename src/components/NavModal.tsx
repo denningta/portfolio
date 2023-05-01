@@ -31,8 +31,8 @@ const NavModal = ({ navItems, onClose = () => { }, darkModeButton }: NavModalPro
         <div className="text-xl my-5">
           <NavItem title="Home" href="/" icon={GiAstronautHelmet} />
         </div>
-        {navItems && navItems.map(navItem =>
-          <div className="my-5 text-xl">
+        {navItems && navItems.map((navItem, i) =>
+          <div key={`navItem-${i}`} className="my-5 text-xl">
             <NavItem {...navItem} />
           </div>
         )}

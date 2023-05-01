@@ -19,16 +19,21 @@ const Button = ({ title, icon }: ButtonProps) => {
   }
 
   return (
+
     <div
       className={`
-        w-fit rounded bg-gradient-to-b from-sky-200 to-blue-800 drop-shadow 
+        m-[1px]
+        w-fit rounded-full 
+        bg-gradient-to-b from-blue-300 to-blue-800 
+        dark:bg-gradient-to-b dark:from-blue-400 dark:to-blue-800
+        drop-shadow
       `}
     >
       <button
         className={`
           z-1
           m-[1px]
-          px-3 py-1 rounded
+          px-4 py-1 rounded-full
           transition ease-in-out
           text-white
           bg-blue-500

@@ -6,6 +6,7 @@ import { DarkModeContext } from "./DarkModeContext";
 import Footer from "./Footer";
 import NavBar from "./Navbar";
 import { NavItemProps } from "./Navitem";
+import NavMenu from "./NavMenu";
 import NavModal from "./NavModal";
 
 export interface LayoutProps {
@@ -15,7 +16,7 @@ export interface LayoutProps {
 
 export default function Layout({ children, animateChildren = true }: LayoutProps) {
   const navBarHeight = 50
-  const [isMenuOpen, toggleMenuOpen] = useCycle(false, true);
+  const [isMenuOpen, toggleMenu] = useCycle(false, true);
 
   const [darkMode, setDarkMode] = useState(false)
 
@@ -60,19 +61,25 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
         >
           <NavBar
             isMenuOpen={isMenuOpen}
-            onMenuToggle={toggleMenuOpen}
+            onMenuToggle={toggleMenu}
             navItems={navItems}
             height={navBarHeight}
             darkModeButton={darkModeButton}
           />
         </motion.div>
-        {isMenuOpen &&
-          <NavModal
+
+        <motion.nav
+          initial={false}
+          animate={isMenuOpen ? 'open' : 'closed'}
+        >
+          <NavMenu
             navItems={navItems}
-            onClose={toggleMenuOpen}
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
             darkModeButton={darkModeButton}
           />
-        }
+        </motion.nav>
+
         <div className="max-w-xl mx-auto" style={{ marginTop: navBarHeight + 30 }}>
           {Array.isArray(children) && children.map((child, index) =>
             animateChildren ?

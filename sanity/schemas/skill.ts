@@ -28,6 +28,11 @@ export default defineType({
       }
     }),
     defineField({
+      name: 'shortDesc',
+      title: 'Short Description',
+      type: 'string'
+    }),
+    defineField({
       name: 'color',
       title: 'Color',
       type: 'color'

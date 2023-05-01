@@ -4,7 +4,7 @@ import SankeyLinkComponent from "./SankeyLink"
 import SankeyNodeComponent from "./SankeyNodeComponent"
 import useSankeyHover from "@/hooks/useSankeyHover"
 import { defaultStyles, TooltipWithBounds, useTooltip, useTooltipInPortal } from "@visx/tooltip"
-import { useCallback, useContext } from "react"
+import { useCallback, useContext, useEffect } from "react"
 import NodeTooltip from "./NodeTooltip"
 import { DarkModeContext } from "../DarkModeContext"
 import { tailwindColors } from "@/lib/tailwind-config"
@@ -12,6 +12,7 @@ import Heading from "../Heading"
 import { ParentSize } from "@visx/responsive"
 import useCustomTooltip from "@/hooks/useCustomTooltip"
 import { useMediaQuery } from "react-responsive"
+import { motion } from "framer-motion"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
@@ -43,7 +44,7 @@ const SankeyChart = ({
     },
     hover: {
       fill: darkMode ? 'white' : 'black',
-      textColor: darkMode ? tailwindColors.neutral['100'] : tailwindColors.blue['500'],
+      textColor: darkMode ? tailwindColors.neutral['100'] : 'black',
       opacity: 1
     }
   }
@@ -51,7 +52,7 @@ const SankeyChart = ({
   const linkStyle = {
     default: {
       fill: darkMode ? 'white' : 'black',
-      opacity: 0.2
+      opacity: darkMode ? 0.2 : 0.5
     },
     hover: {
       fill: darkMode ? tailwindColors.blue['500'] : 'lightblue',
@@ -79,7 +80,6 @@ const SankeyChart = ({
     handlePointerMove
   } = useCustomTooltip({ container: { width: width, height: height } })
 
-
   return (
     <>
       <div className="grid grid-cols-3 w-full">
@@ -91,18 +91,34 @@ const SankeyChart = ({
 
 
 
-      <div className="relative select-none h-[600px]" ref={containerRef} onPointerMove={handlePointerMove}>
+      <motion.div
+        className="relative select-none h-[600px]" ref={containerRef} onPointerMove={handlePointerMove}
 
-        {activeNode && activeNode.y0 &&
-          <div
-            className="absolute left-1/2 -translate-x-1/2 m-0 text-black z-50 px-3 py-1 text-xs w-[300px] mt-[30px]"
-            style={{
-              bottom: activeNode.y0 < height / 3 ? 30 : 'auto',
+      >
+
+        {data && data.nodes.map(node =>
+          <motion.div
+            className="fixed bottom-5 left-5 m-0 text-black z-50 px-3 py-1 text-xs w-[300px] mt-[30px]"
+            animate={activeNode && activeNode.id === node.id ? 'open' : 'closed'}
+            variants={{
+              open: {
+                display: 'block',
+                y: 0,
+                transition: { delay: 0.2 }
+              },
+              closed: {
+                y: 150,
+                transition: { delay: 0.2 }
+              }
             }}
           >
-            <NodeTooltip node={activeNode} />
-          </div>
-        }
+            <NodeTooltip node={node} />
+          </motion.div>
+        )}
+
+
+
+
 
         <ParentSize debounceTime={10}>
           {(parent) => {
@@ -158,7 +174,7 @@ const SankeyChart = ({
             )
           }}
         </ParentSize>
-      </div>
+      </motion.div>
     </>
   )
 }

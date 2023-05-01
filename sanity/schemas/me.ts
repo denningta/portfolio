@@ -21,7 +21,8 @@ const me = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'array',
+      of: [{ type: 'string' }]
     }),
     defineField({
       name: 'photo',

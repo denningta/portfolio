@@ -25,6 +25,11 @@ export default defineType({
       to: [{ type: 'category' }]
     }),
     defineField({
+      name: 'shortDesc',
+      title: 'Short Description',
+      type: 'string'
+    }),
+    defineField({
       name: 'color',
       title: 'Color',
       type: 'color'
