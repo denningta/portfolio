@@ -33,7 +33,9 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
         <Layout>
           <Hero data={props.me} />
           <Bio data={props.me} />
-          <SankeyChart data={sankeyData} width={600} height={1000} />
+          {sankeyData &&
+            <SankeyChart data={sankeyData} width={600} height={1000} />
+          }
           <FeaturedPosts posts={props.featuredPosts} />
         </Layout>
       </main>

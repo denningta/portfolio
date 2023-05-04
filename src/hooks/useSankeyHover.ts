@@ -9,11 +9,15 @@ export interface UseSankeyHoverProps {
     default: {
       fill: string
       textColor: string
+      textBackground: string
+      textBgOpacity: number
       opacity: number
     }
     hover: {
       fill: string
       textColor: string
+      textBackground: string
+      textBgOpacity: number
       opacity: number
     }
   }

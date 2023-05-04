@@ -6,7 +6,7 @@ const robotoFlex = Roboto_Flex({ subsets: ["latin"] })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={robotoFlex.className}>
+    <main className={`${robotoFlex.className}`}>
       <Component {...pageProps} />
     </main>
   )

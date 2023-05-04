@@ -10,7 +10,7 @@ import NavMenu from "./NavMenu";
 import NavModal from "./NavModal";
 
 export interface LayoutProps {
-  children: JSX.Element | JSX.Element[]
+  children: React.ReactNode
   animateChildren?: boolean
 }
 
@@ -50,7 +50,7 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
 
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-0">
+    <div className="flex flex-col mx-auto px-4 sm:px-0 min-h-screen">
 
       <DarkModeContext.Provider value={darkMode}>
         <motion.div
@@ -80,7 +80,7 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
           />
         </motion.nav>
 
-        <div className="max-w-xl mx-auto" style={{ marginTop: navBarHeight + 30 }}>
+        <div className="max-w-xl w-full mx-auto" style={{ paddingTop: navBarHeight + 30 }}>
           {Array.isArray(children) && children.map((child, index) =>
             animateChildren ?
               <motion.div
@@ -96,6 +96,7 @@ export default function Layout({ children, animateChildren = true }: LayoutProps
               <div key={`child-${index}`}>{child}</div>
           )}
         </div>
+        <div className="grow" />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

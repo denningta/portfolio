@@ -8,7 +8,6 @@ export interface HeroProps {
 }
 
 const Hero = ({ data }: HeroProps) => {
-  console.log(data)
 
   return (
     <div className="sm:flex sm:justify-center">
@@ -22,8 +21,8 @@ const Hero = ({ data }: HeroProps) => {
               {data.name}
             </div>
             <div className="flex flex-col items-center sm:items-start font-light">
-              {data.title && data.title.map(el =>
-                <div>{el}</div>
+              {data.title && data.title.map((el, i) =>
+                <div key={`title-${i}`}>{el}</div>
               )}
             </div>
             <div className="mt-6">

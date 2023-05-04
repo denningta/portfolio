@@ -40,11 +40,15 @@ const SankeyChart = ({
     default: {
       fill: darkMode ? 'white' : 'black',
       textColor: darkMode ? 'white' : 'black',
+      textBackground: darkMode ? 'black' : 'white',
+      textBgOpacity: 0.5,
       opacity: 0.7
     },
     hover: {
       fill: darkMode ? 'white' : 'black',
-      textColor: darkMode ? tailwindColors.neutral['100'] : 'black',
+      textColor: darkMode ? 'black' : 'white',
+      textBackground: darkMode ? 'white' : 'black',
+      textBgOpacity: 0.5,
       opacity: 1
     }
   }
@@ -88,17 +92,13 @@ const SankeyChart = ({
         <Heading className="flex justify-end">Skills</Heading>
       </div>
 
-
-
-
       <motion.div
         className="relative select-none h-[600px]" ref={containerRef} onPointerMove={handlePointerMove}
-
       >
-
-        {data && data.nodes.map(node =>
+        {isMobile && data && data.nodes.map((node, i) =>
           <motion.div
-            className="fixed bottom-5 left-5 m-0 text-black z-50 px-3 py-1 text-xs w-[300px] mt-[30px]"
+            key={`tooltip-${i}`}
+            className="fixed bottom-5 right-5 m-0 text-black z-50 px-3 py-1 text-xs w-[300px] mt-[30px]"
             animate={activeNode && activeNode.id === node.id ? 'open' : 'closed'}
             variants={{
               open: {
@@ -116,8 +116,16 @@ const SankeyChart = ({
           </motion.div>
         )}
 
-
-
+        {!isMobile && activeNode &&
+          <TooltipWithBounds
+            key={Math.random()}
+            left={tooltipLeft}
+            top={tooltipTop + 40}
+            style={{ ...defaultStyles, padding: 0, background: 'none', boxShadow: 'none' }}
+          >
+            <NodeTooltip node={activeNode} />
+          </TooltipWithBounds>
+        }
 
 
         <ParentSize debounceTime={10}>
@@ -163,6 +171,8 @@ const SankeyChart = ({
                             onHoverChange={handleNodeHoverChange}
                             fill={handleNodeStyle(node).fill}
                             textColor={handleNodeStyle(node).textColor}
+                            textBackground={handleNodeStyle(node).textBackground}
+                            textBgOpacity={handleNodeStyle(node).textBgOpacity}
                             opacity={handleNodeStyle(node).opacity}
                           />
                         )}
