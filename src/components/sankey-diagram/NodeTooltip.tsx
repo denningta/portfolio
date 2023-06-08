@@ -1,5 +1,6 @@
 import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
 import { SankeyNode } from "d3-sankey"
+import { useMediaQuery } from "react-responsive"
 import { SiIcon } from "../../../public/sanity-icon-picker"
 
 interface NodeTooltipProps {
@@ -11,6 +12,7 @@ const formatDate = (input: string) => {
 }
 
 const NodeTooltip = ({ node }: NodeTooltipProps) => {
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
   return (
     <div
@@ -24,6 +26,11 @@ const NodeTooltip = ({ node }: NodeTooltipProps) => {
           </div>
           {node.start && node.end && <div className="mt-2">{formatDate(node.start)} to {formatDate(node.end)}</div>}
           {node.shortDesc && <div className="mt-2">{node.shortDesc}</div>}
+
+          {isMobile &&
+            <button>More</button>
+
+          }
         </>
       }
     </div>

@@ -35,6 +35,12 @@ export default defineType({
       type: 'color'
     }),
     defineField({
+      name: 'post',
+      title: 'Post',
+      type: 'reference',
+      to: [{ type: 'post' }]
+    }),
+    defineField({
       name: 'references',
       title: 'Skills',
       type: 'array',

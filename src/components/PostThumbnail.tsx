@@ -15,12 +15,11 @@ const PostThumbnail = ({ post }: PostThumbnailProps) => {
         <Link href={`writing/${post.slug?.current}`} className="w-full">
           <div className="relative w-full aspect-video overflow-hidden rounded border dark:border-neutral-700 border-neutral-300">
             <Image
-              src={urlFor(post.mainImage as SanityImageSource).url()}
+              src={urlFor(post.mainImage as SanityImageSource).width(600 * 2).height(400 * 2).url()}
               alt={'Profile photo'}
-              fill={true}
-              sizes={'33vw'}
               priority={true}
-              style={{ objectFit: 'cover' }}
+              width={600}
+              height={400}
             />
           </div>
           <div className="text-center mt-3">

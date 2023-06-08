@@ -3,18 +3,19 @@ import { IconType } from 'react-icons'
 import client from '../lib/sanity-client'
 
 export interface SankeyNodeCustom {
-  name: string,
-  id: string,
+  name: string
+  id: string
   color: { hex: string, alpha: number },
-  shortDesc: string,
-  start: string,
-  end: string,
+  shortDesc: string
+  start: string
+  end: string
   icon: keyof IconType
+  href: string
 }
 
 export interface SankeyLinkCustom {
-  sourceColor: { hex: string, alpha: number },
-  targetColor: { hex: string, alpha: number },
+  sourceColor: { hex: string, alpha: number }
+  targetColor: { hex: string, alpha: number }
   value: number
 }
 
@@ -58,7 +59,8 @@ const getSankeyData = async (): Promise<SankeyData> => {
           start,
           end,
           shortDesc,
-          icon
+          icon,
+          "href": post->slug.current
         },
         "links": linkdata[].links[] + linkdata[].sublinks[].links[],
       }

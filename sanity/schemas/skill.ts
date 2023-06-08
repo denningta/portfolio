@@ -38,6 +38,12 @@ export default defineType({
       type: 'color'
     }),
     defineField({
+      name: 'post',
+      title: 'Post',
+      type: 'reference',
+      to: [{ type: 'post' }]
+    }),
+    defineField({
       name: 'altIcon',
       title: 'Alternate Icon',
       type: 'image',

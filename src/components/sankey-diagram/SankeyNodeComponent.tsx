@@ -2,6 +2,7 @@ import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyDa
 import { Group } from "@visx/group"
 import { Text } from "@visx/text"
 import { SankeyNode } from "d3-sankey"
+import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "react-responsive"
 
@@ -46,45 +47,77 @@ const SankeyNodeComponent = ({
   const textRef = useRef<SVGSVGElement>(null)
   const textBBox = textRef.current?.getBBox()
 
+  const nodeBox =
+    <rect
+      width={nodeWidth}
+      height={nodeHeight}
+      fill={node.color ? node.color.hex : fill}
+      opacity={opacity}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    />
+
+  const nodeText = <>{textBBox &&
+    <rect
+      fill={textBackground}
+      x={textBBox.x - 8}
+      y={textBBox.y - 2}
+      height={textBBox.height + 4}
+      width={textBBox.width + 16}
+      rx={4}
+      opacity={textBgOpacity}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    />
+  }
+    <Text
+      x={textX}
+      y={textY}
+      innerRef={textRef}
+      verticalAnchor="middle"
+      textAnchor={(node.x0 ?? 0) > 1 ? 'end' : 'start'}
+      fontSize={isMobile ? 10 : 11}
+      fill={textColor}
+      opacity={opacity}
+      width={textWidth}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {node.name}
+    </Text>
+  </>
+
+
+  if (!isMobile)
+    return (
+      <>
+        {nodeWidth > 0 && nodeHeight > 0 &&
+          <Group top={node.y0} left={node.x0}>
+            <Link
+              href={node.href ? `/writing/${node.href}` : ''}
+              className={node.href ? 'cursor-pointer' : 'cursor-auto'}
+            >
+              {nodeBox}
+            </Link>
+
+            <Link
+              href={node.href ? `/writing/${node.href}` : ''}
+              className={node.href ? 'cursor-pointer' : 'cursor-default'}
+            >
+              {nodeText}
+            </Link>
+
+          </Group>
+        }
+      </>
+    )
+
   return (
     <>
       {nodeWidth > 0 && nodeHeight > 0 &&
         <Group top={node.y0} left={node.x0}>
-          <rect
-            width={nodeWidth}
-            height={nodeHeight}
-            fill={node.color ? node.color.hex : fill}
-            opacity={opacity}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          {textBBox &&
-            <rect
-              fill={textBackground}
-              x={textBBox.x - 8}
-              y={textBBox.y - 2}
-              height={textBBox.height + 4}
-              width={textBBox.width + 16}
-              rx={4}
-              opacity={textBgOpacity}
-            />
-          }
-          <Text
-            x={textX}
-            y={textY}
-            innerRef={textRef}
-            verticalAnchor="middle"
-            textAnchor={(node.x0 ?? 0) > 1 ? 'end' : 'start'}
-            fontSize={isMobile ? 10 : 11}
-            fill={textColor}
-            opacity={opacity}
-            width={textWidth}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {node.name}
-          </Text>
-
+          {nodeBox}
+          {nodeText}
         </Group>
       }
     </>
