@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
 import Layout from '@/components/Layout'
 import Hero from '@/components/Hero'
 import Bio from '@/components/Bio'
