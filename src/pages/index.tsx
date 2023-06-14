@@ -24,7 +24,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Tim Denning</title>
         <meta name="description" content="Portfolio Website for Tim Denning" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
