@@ -1,26 +1,25 @@
 import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
 import { LinearGradient } from "@visx/gradient"
 import { SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey"
-import { useEffect, useRef } from "react"
+import pSBCR from "../../lib/shade-blend-convert"
 
 export interface SankeyLinkComponentProps {
   link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom> & {
-    target: SankeyNode<SankeyNodeCustom, SankeyLinkCustom>
-    source: SankeyNode<SankeyNodeCustom, SankeyLinkCustom>
+    target?: SankeyNode<SankeyNodeCustom, SankeyLinkCustom>
+    source?: SankeyNode<SankeyNodeCustom, SankeyLinkCustom>
   }
   fill?: string | undefined
   opacity?: string | number | undefined
   onHoverChange?: (link: SankeyLink<SankeyNodeCustom, SankeyLinkCustom> | undefined) => void
+  darkMode?: boolean
 }
 
 const SankeyLinkComponent = ({
   link,
   opacity,
-  onHoverChange = () => { }
+  onHoverChange = () => { },
+  darkMode = false
 }: SankeyLinkComponentProps) => {
-
-  const pathRef = useRef<SVGPathElement>(null)
-
   const path = sankeyLinkHorizontal()
 
   const handleMouseEnterLink = () => {
@@ -31,14 +30,20 @@ const SankeyLinkComponent = ({
     onHoverChange(undefined)
   }
 
-  if (link.index === 0) console.log(link)
+  const getColor = (hex: string) => {
+    const darkModeHex = pSBCR(-0.6, hex)
+    if (!darkMode && darkModeHex) return darkModeHex
+    return hex
+  }
+
+  if (link.index === 0) console.log(link.sourceColor.hex, getColor(link.sourceColor.hex))
 
   return (
     <>
       <LinearGradient
         id={`${link.index}`}
-        from={link.sourceColor && link.sourceColor.hex}
-        to={link.targetColor && link.targetColor.hex}
+        from={link.sourceColor && getColor(link.sourceColor.hex)}
+        to={link.targetColor && getColor(link.targetColor.hex)}
         vertical={false}
         gradientUnits="userSpaceOnUse" // display gradient for path whose bounding box height === 0
         x2={link.target.x0} // required with userSpaceOnUse

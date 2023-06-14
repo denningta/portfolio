@@ -13,6 +13,8 @@ import { ParentSize } from "@visx/responsive"
 import useCustomTooltip from "@/hooks/useCustomTooltip"
 import { useMediaQuery } from "react-responsive"
 import { motion } from "framer-motion"
+import { SankeyLinkCustom, SankeyNodeCustom } from "@/sanity-queries/getSankeyData"
+import { SankeyLink, SankeyNode } from "d3-sankey"
 
 export interface SankeyChartProps {
   data: SankeyData | undefined
@@ -156,10 +158,11 @@ const SankeyChart = ({
                         {data.links.map((link, i) =>
                           <SankeyLinkComponent
                             key={`link-${i}`}
-                            link={link}
+                            link={link as any}
                             onHoverChange={handleLinkHoverChange}
                             fill={handleLinkStyle(link).fill}
                             opacity={handleLinkStyle(link).opacity}
+                            darkMode={darkMode}
                           />
                         )}
 

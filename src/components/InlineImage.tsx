@@ -35,7 +35,7 @@ const InlineImage = ({
         initialTransformMatrix={initialTransform}
       >
         {(zoom) => (
-          <div className="relative w-full">
+          <div className="relative w-full mt-6">
             <Image
               src={urlFor(value.asset).width(width).height(height).url()}
               alt={'Inline photo'}
